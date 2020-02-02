@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>com.yss.fsip.demo.parent</artifactId>
+        <groupId>com.lsp.learn.demo</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>com.yss.fsip.demo.auth</artifactId>
+
+	<properties>
+		<java.version>1.8</java.version>
+	    <!--  MyBatis Generator  -->
+	    <!--  Java接口和实体类  -->
+	    <targetJavaProject>${basedir}/src/main/java</targetJavaProject>
+	    <targetMapperPackage>com.yss.fsip.demo.auth.mapper</targetMapperPackage>
+	    <targetModelPackage>com.yss.fsip.demo.auth.entity</targetModelPackage>
+	    <!--  XML生成路径  -->
+	    <targetResourcesProject>${basedir}/src/main/java</targetResourcesProject>
+	    <targetXMLPackage>com.yss.fsip.demo.auth.mapper</targetXMLPackage>
+	    <!--  依赖版本  -->
+	    <mapper.version>4.1.5</mapper.version>
+	    <mysql.version>5.1.29</mysql.version>
+	</properties>
+  
+
+  <dependencies>
+	  <dependency>
+		  <groupId>com.lsp.learn.demo</groupId>
+		  <artifactId>fsip-spring-boot-starter</artifactId>
+		  <version>1.0-SNAPSHOT</version>
+	  </dependency>
+
+	  <dependency>
+		  <groupId>com.lsp.learn.demo</groupId>
+		  <artifactId>com.yss.fsip.common</artifactId>
+		  <version>1.0-SNAPSHOT</version>
+	  </dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		
+		<!-- 数据库驱动 需要在添加oracle -->
+	    <dependency>
+			<groupId>ojdbc</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>10.2.0.5.0</version>
+		</dependency>
+		
+         <!-- 热部署模块 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional> <!-- 这个需要为 true 热部署才有效 -->
+        </dependency>
+		
+	</dependencies>
+
+	<build>
+		<plugins>
+		<!-- 	<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin> -->
+			
+			<plugin>
+			    <groupId>org.mybatis.generator</groupId>
+			    <artifactId>mybatis-generator-maven-plugin</artifactId>
+			    <version>1.3.2</version>
+			    <configuration>
+			        <configurationFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>
+			        <overwrite>true</overwrite>
+			        <verbose>true</verbose>
+			    </configuration>
+			    <dependencies>
+			    <dependency>
+					<groupId>ojdbc</groupId>
+					<artifactId>ojdbc14</artifactId>
+					<version>10.2.0.5.0</version>
+				</dependency>
+			        <dependency>
+			        <groupId>tk.mybatis</groupId>
+			        <artifactId>mapper</artifactId>
+			        <version>${mapper.version}</version>
+			        </dependency>
+			    </dependencies>
+			</plugin>
+			
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="newAccountManage" name="账户开户" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <userTask id="newAcctStart" name="账户开户经办" activiti:formKey="window:/Portal/lifeCycleManagement/BusinessManager/AccountManager/AccountOpening"></userTask>
+    <userTask id="newAcctAudit" name="账户开户审核" activiti:candidateGroups="acs-cgblifecycle@account-open-review" activiti:formKey="window:/Portal/lifeCycleManagement/MyTask/AccountOpeningApprove?input=disable">
+      <extensionElements>
+        <activiti:taskListener event="create" class="com.yss.fsip.lifecycle.web.event.UserCommonListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="newAcctStart"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="newAcctStart" targetRef="newAcctAudit"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="newAcctAudit" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="endevent1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${calCheck=="pass"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="exclusivegateway1" targetRef="newAcctStart">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${calCheck!="pass"}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_newAccountManage">
+    <bpmndi:BPMNPlane bpmnElement="newAccountManage" id="BPMNPlane_newAccountManage">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="160.0" y="230.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="1160.0" y="230.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="newAcctStart" id="BPMNShape_newAcctStart">
+        <omgdc:Bounds height="62.0" width="107.0" x="320.0" y="217.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="newAcctAudit" id="BPMNShape_newAcctAudit">
+        <omgdc:Bounds height="55.0" width="115.0" x="601.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="960.0" y="227.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="195.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="320.0" y="248.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="427.0" y="248.0"></omgdi:waypoint>
+        <omgdi:waypoint x="601.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="716.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="960.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="1000.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1160.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="980.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="979.0" y="323.0"></omgdi:waypoint>
+        <omgdi:waypoint x="671.0" y="323.0"></omgdi:waypoint>
+        <omgdi:waypoint x="372.0" y="323.0"></omgdi:waypoint>
+        <omgdi:waypoint x="373.0" y="279.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="modifyAccountManage" name="账户变更" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <userTask id="modifyAcctStart" name="账户变更经办" activiti:formKey="window:/Portal/lifeCycleManagement/BusinessManager/AccountManager/AccountChange"></userTask>
+    <userTask id="modifyAcctAudit" name="账户变更审核" activiti:candidateGroups="acs-cgblifecycle@account-change-review" activiti:formKey="window:/Portal/lifeCycleManagement/MyTask/AccountChangeApprove?input=disable"></userTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="modifyAcctStart"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="modifyAcctStart" targetRef="modifyAcctAudit"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow3" sourceRef="modifyAcctAudit" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="endevent1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${calCheck=="pass"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="exclusivegateway1" targetRef="modifyAcctStart">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${calCheck!="pass"}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_modifyAccountManage">
+    <bpmndi:BPMNPlane bpmnElement="modifyAccountManage" id="BPMNPlane_modifyAccountManage">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="150.0" y="270.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="1210.0" y="270.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="modifyAcctStart" id="BPMNShape_modifyAcctStart">
+        <omgdc:Bounds height="55.0" width="125.0" x="380.0" y="260.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="modifyAcctAudit" id="BPMNShape_modifyAcctAudit">
+        <omgdc:Bounds height="55.0" width="116.0" x="700.0" y="260.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="1000.0" y="267.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="185.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="380.0" y="287.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="505.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="700.0" y="287.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="816.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1000.0" y="287.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="1040.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1210.0" y="287.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="1020.0" y="307.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1019.0" y="400.0"></omgdi:waypoint>
+        <omgdi:waypoint x="763.0" y="400.0"></omgdi:waypoint>
+        <omgdi:waypoint x="442.0" y="400.0"></omgdi:waypoint>
+        <omgdi:waypoint x="442.0" y="315.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

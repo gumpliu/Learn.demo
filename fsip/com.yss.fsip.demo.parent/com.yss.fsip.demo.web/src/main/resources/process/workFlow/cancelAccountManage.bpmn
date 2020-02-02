@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="cancelAccountManage" name="账户销户" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <userTask id="cancelAcctStart" name="账户销户经办" activiti:formKey="window:/Portal/lifeCycleManagement/BusinessManager/AccountManager/AccountPinHouseholds"></userTask>
+    <userTask id="cancelAcctAudit" name="账户销户审批" activiti:candidateGroups="acs-cgblifecycle@account-cancel-review" activiti:formKey="window:/Portal/lifeCycleManagement/MyTask/AccountPinHousehodsApprove?input=disable">
+      <extensionElements>
+        <activiti:taskListener event="create" class="com.yss.fsip.lifecycle.web.event.UserCommonListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="cancelAcctStart"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="cancelAcctStart" targetRef="cancelAcctAudit"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="cancelAcctAudit" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="stampCancelAcct">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${calCheck=="pass" && type=="ZHLX01"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="exclusivegateway1" targetRef="cancelAcctStart">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${calCheck!="pass"}]]></conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="stampCancelAcct" name="调用电子印鉴系统完成用印" activiti:class="com.yss.fsip.lifecycle.web.delegate.account.AccountDelegateServiceImpl"></serviceTask>
+    <serviceTask id="emailCancleAcct" name="将销户通知书以邮件发送开户行" activiti:class="com.yss.fsip.lifecycle.web.delegate.account.AccountDelegateServiceImpl"></serviceTask>
+    <sequenceFlow id="flow6" sourceRef="exclusivegateway1" targetRef="endevent1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${calCheck=="pass" && type!="ZHLX01"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="stampCancelAcct" targetRef="emailCancleAcct"></sequenceFlow>
+    <sequenceFlow id="flow8" sourceRef="emailCancleAcct" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_cancelAccountManage">
+    <bpmndi:BPMNPlane bpmnElement="cancelAccountManage" id="BPMNPlane_cancelAccountManage">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="40.0" y="230.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="1260.0" y="230.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="cancelAcctStart" id="BPMNShape_cancelAcctStart">
+        <omgdc:Bounds height="62.0" width="107.0" x="140.0" y="217.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="cancelAcctAudit" id="BPMNShape_cancelAcctAudit">
+        <omgdc:Bounds height="55.0" width="105.0" x="350.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="570.0" y="227.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stampCancelAcct" id="BPMNShape_stampCancelAcct">
+        <omgdc:Bounds height="55.0" width="125.0" x="710.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="emailCancleAcct" id="BPMNShape_emailCancleAcct">
+        <omgdc:Bounds height="55.0" width="126.0" x="980.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="75.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="140.0" y="248.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="247.0" y="248.0"></omgdi:waypoint>
+        <omgdi:waypoint x="350.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="455.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="610.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="710.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="590.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="590.0" y="323.0"></omgdi:waypoint>
+        <omgdi:waypoint x="193.0" y="323.0"></omgdi:waypoint>
+        <omgdi:waypoint x="193.0" y="279.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="590.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="590.0" y="141.0"></omgdi:waypoint>
+        <omgdi:waypoint x="930.0" y="141.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1277.0" y="141.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1277.0" y="230.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="835.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="980.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="1106.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1260.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

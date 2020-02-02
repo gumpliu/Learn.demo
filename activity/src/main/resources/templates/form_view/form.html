@@ -1,0 +1,122 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<head>
+<title>start.form</title>
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+<script th:src="@{/jquery/jquery-1.8.3.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<script type="text/javascript">
+	function formSubmit(  )
+	
+	{   
+	   if(confirm("确认提交任务?")) {
+		   var url = "";
+		   var processDefinitionId = $("#processDefinitionId").val();
+		   var taskId  = $("#taskId").val();
+		   if(processDefinitionId!=null && processDefinitionId!=undefined && processDefinitionId!=""){
+			   url = "?processDefinitionId="+processDefinitionId;
+		   }else{
+			   url = "?taskId="+taskId;
+		   }
+	    	 $.ajax({
+	    		    type:"GET",
+	    		    url: $("#myForm").attr('name')+url,
+	    		    data:$('#myForm').serialize(),
+	    		    contentType: "application/json; charset=utf-8",
+	    		    dataType: "text",
+	    		    success: function (avg) {
+	    		    	alert(avg);
+	    		    	$("#btn").prop("disabled", true);
+	    		    },
+	    		    error : function(XMLHttpRequest, textStatus, errorThrown) {
+	    				alert("提交失败");
+	    				
+	    			}
+
+	    	 }); 
+	    } 
+	   
+	}
+
+</script>
+	<style>
+		.col-center-block {
+		    float: none;
+		    display: block;
+		    margin-top: 50;
+		}
+	</style>
+</head>
+<body>
+  <div>
+    <div class="col-center-block" >
+      <input type="hidden" id="processDefinitionId" name="processDefinitionId" th:value="${processDefinitionId}"/>
+      <input type="hidden" id="taskId" name="taskId" th:value="taskId"/>
+      <span th:utext="${form_Data}"></span>
+        <!-- <form class="form-horizontal" id="myForm" name="/simpleflow/saveForm">
+	      <div class="control-group">
+	        <label class="control-label" for="inputEmail">休假单号 :</label>
+	        <div class="controls">
+	          <input type="text" id="id">
+	        </div>
+	      </div>
+	      <div class="control-group">
+	        <label class="control-label" for="inputPassword">休假单名 :</label>
+	        <div class="controls">
+	          <input type="text" id="fcode" name="fcode">
+	        </div>
+	      </div>
+	      <div class="control-group">
+	        <label class="control-label" for="inputPassword">开始休假时间 :</label>
+	        <div class="controls">
+	          <input type="text" id="fbegindate" name="fbegindate">
+	        </div>
+	      </div>
+	      <div class="control-group">
+	        <label class="control-label" for="inputPassword">休假结束时间 :</label>
+	        <div class="controls">
+	          <input type="text" id="fenddate" name="fenddate">
+	        </div>
+	      </div>
+	      <div class="control-group">
+	        <label class="control-label" for="inputPassword">休假人 :</label>
+	        <div class="controls">
+	          <input type="text" id="fname" name="fname">
+	        </div>
+	      </div>
+	      <div class="control-group">
+	        <label class="control-label" for="inputPassword">休假类别 :</label>
+	        <div class="controls">
+	          <select id="fapplytype" name="fapplytype">
+				  <option>年假</option>
+				  <option>病假</option>
+				  <option>事假</option>
+				  <option>调休</option>
+			  </select>
+	        </div>
+	      </div>
+	      <div class="control-group">
+	        <label class="control-label" for="inputPassword">申请原因 :</label>
+	        <div class="controls">
+	          <input type="text" id="fapplyreason" name="fapplyreason">
+	        </div>
+	      </div>
+	      <div class="control-group">
+		    <label class="control-label" for="inputPassword"><input type="radio" checked> 填写请假原因</label>
+		  </div>
+		  <div class="control-group">
+		  	<label class="control-label" for="inputPassword">办理意见 : </label>
+		    <div class="controls">
+		     <textarea id="fapplyreason" name="" rows="3"></textarea>
+		    </div>
+		  </div>
+       </form> -->
+	    <div class="controls" style="text-align:center">
+	      <button id="btn" class="btn btn-primary" onclick="formSubmit()">submit</button>
+		  <button type="reset" class="btn btn-primary">cancel</button>
+	    </div>
+    </div>
+  </div>
+</body>
+
+</html>

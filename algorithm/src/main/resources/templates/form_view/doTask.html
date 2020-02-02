@@ -1,0 +1,410 @@
+<!DOCTYPE HTML>
+
+<head>
+	<!-- <meta http-equiv="Expires" CONTENT="0">
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="pragma" content="no-cache" /> -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>待办任务</title>
+	<script type="text/javascript">
+		var _globalKeyDown = false;
+		var CONTEXT = {
+			"DEBUG": false,
+			"CONFIG": {
+				"GRID.LOCKING": "true",
+				"useBackSpace": "false",
+				"OPERATION.PARAMS": "view,add,edit,copy,history,del,check,uncheck,review,unreview",
+				"pdfenable": "true",
+				"useAudit": "true"
+			},
+			"PATH": {
+				"webclient": "",
+				"sharedResource": "",
+				"portal": "",
+				"base": "",
+				"authorization": "",
+				"basalinfo": ""
+			},
+			"LOCALE": "zh_CN",
+			"USER": "19050911012597000222",
+			"USERNAME": "kkk",
+			"AUDIT": true,
+			"PRINTVERSION": 3,
+			"WORKFLOW": {
+				"isFlow": false,
+				"flowengine_showFlowPanel": false,
+				"processDefinitions": {}
+			},
+			"CURRENTDATE": "2019-06-06",
+			"OPERATIONCOLUMN": false
+		};
+	</script>
+	<link rel="stylesheet" type="text/css" href="../taskFiles/themes/default.min.css?v=1.10.1" />
+	<script type="text/javascript" src="../taskFiles/manifest.min.js?v=1.10.1"></script>
+	<script type="text/javascript" src="../taskFiles/bundle.min.js?v=1.10.1"></script>
+	<script type="text/javascript" src="../taskFiles/locale/zh_CN.min.js?v=1.10.1"></script>
+	<link rel="stylesheet" type="text/css" href="../taskFiles/themes/chrome-fix.min.css?v=1.10.1" />
+	<script type="text/javascript">
+		Ext.BLANK_IMAGE_URL = "../taskFiles/themes/images/s.gif"
+	</script>
+	<script type="text/javascript" src="../taskFiles/workflow.js?v=1.10.1"></script>
+	<script type="text/javascript">
+		var taskName, frontOperator, sf_7, sf_6, sf_5, sf_4, search, sf_9, sf_8, myACL, grid, untakeTask, sf_3, sf_2, sf_1, sf_10, sf_11, flowsn, sf_12, excel, processTask, print, takeAndProcessTask, serialName, formWindow;
+	</script>
+	<script type="text/javascript">
+		Ext.onReady(function () {
+			if (_globalKeyDown) {
+				Ext.EventManager.on(window, 'keydown', _globalKeyDown);
+				Ext.EventManager.on(window, 'keypress', _globalKeyDown);
+				Ext.EventManager.on(document.body, 'keydown', _globalKeyDown);
+			}
+			if (Workflow) {
+				Workflow._collaborationURL = '';
+			}
+
+			sf_2 = new sofa.Toolbar({
+				"baseUrl": "../../",
+				"useDefault": true,
+				"bindGrid": "grid",
+				"buttons": [{
+					"id": "print",
+					"visible": false,
+					"ACL": "query"
+				}, {
+					"id": "excel",
+					"visible": false,
+					"ACL": "query"
+				}],
+				"applyTo": "ct_sf_2"
+			});
+			new Ext.form.TextField({
+				"id": "procInstId",
+				"safeChars": true,
+				"labelWidth": 70,
+				"renderTo": "ct_form_field_procInstId",
+				"width": 130,
+				"label": "流水号"
+			});
+            procInstId = Ext.getCmp("procInstId");
+			new Ext.form.TextField({
+				"id": "procDefName",
+				"safeChars": true,
+				"labelWidth": 70,
+				"renderTo": "ct_form_field_procDefName",
+				"width": 130,
+				"label": "流程名称"
+			});
+            procDefName = Ext.getCmp("procDefName");
+			new Ext.form.TextField({
+				"id": "taskName",
+				"safeChars": true,
+				"labelWidth": 70,
+				"renderTo": "ct_form_field_taskName",
+				"width": 130,
+				"label": "任务名称"
+			});
+			taskName = Ext.getCmp("taskName");
+			new Ext.form.TextField({
+				"id": "frontOperator",
+				"safeChars": true,
+				"labelWidth": 70,
+				"renderTo": "ct_form_field_frontOperator",
+				"width": 130,
+				"label": "发起人"
+			});
+			frontOperator = Ext.getCmp("frontOperator");
+            new Ext.form.TextField({
+                "id": "fapplyuser",
+                "safeChars": true,
+                "labelWidth": 70,
+                "renderTo": "ct_form_field_fapplyuser",
+                "width": 130,
+                "label": "休假人"
+            });
+            fapplyuser = Ext.getCmp("fapplyuser");
+            new Ext.form.TextField({
+                "id": "fapplytype",
+                "safeChars": true,
+                "labelWidth": 70,
+                "renderTo": "ct_form_field_fapplytype",
+                "width": 130,
+                "label": "休假类型"
+            });
+            fapplytype = Ext.getCmp("fapplytype");
+			new sofa.Button({
+				"id": "sf_3",
+				"text": "查询",
+				"renderTo": "ct_btn_sf_3",
+				"type": "submit"
+			});
+			sf_3 = Ext.getCmp("sf_3");
+			search = new Ext.form.BasicForm("form_search", {
+				"url": "",
+				"method": "POST",
+				"standardSubmit": false,
+				"dataType": "html/text",
+				"dataFormat": "json",
+				"_widget_items_id": "procInstId,procDefName,taskName,frontOperator",
+				"submitType": "ajax",
+				listeners: {
+					"beforesubmit": searchSubmit
+				}
+			});
+			search.add(Ext.getCmp("procInstId"), Ext.getCmp("procDefName"), Ext.getCmp("taskName"),
+				Ext.getCmp("frontOperator"), Ext.getCmp("fapplyuser"), Ext.getCmp("fapplytype"));
+			search.addButton([Ext.getCmp('sf_3')]);
+            procInstId = Ext.getCmp("procInstId");
+            procDefName = Ext.getCmp("procDefName");
+			taskName = Ext.getCmp("taskName");
+			frontOperator = Ext.getCmp("frontOperator");
+            fapplyuser = Ext.getCmp("fapplyuser");
+            fapplytype = Ext.getCmp("fapplytype");
+
+			grid = new sofa.grid.GridPanel({
+				"monitorResize": true,
+				"stateful": false,
+				"plugins": [],
+				"pageSize": 30,
+				"columns": [{
+					"sortable": false,
+					"width": 100,
+					"align": "center",
+					"dataIndex": "procInstId",
+					"header": "流水号"
+				}, {
+					"sortable": false,
+					"width": 250,
+					"align": "center",
+					"dataIndex": "procDefId",
+					"header": "场景ID"
+				}, {
+					"sortable": false,
+					"width": 150,
+					"align": "center",
+					"dataIndex": "taskName",
+					"header": "任务名称"
+				}, {
+					"sortable": false,
+					"width": 100,
+					"align": "center",
+					"dataIndex": "taskId",
+					"header": "任务ID"
+				}, {
+                    "sortable": false,
+                    "width": 100,
+                    "align": "center",
+                    "dataIndex": "fapplyuser",
+                    "header": "休假人"
+                },{
+                    "sortable": false,
+                    "width": 100,
+                    "align": "center",
+                    "dataIndex": "fapplytype",
+                    "header": "休假类别"
+                },{
+                    "sortable": false,
+                    "width": 200,
+                    "align": "center",
+                    "dataIndex": "fbegindate",
+                    "header": "休假开始时间"
+                },{
+                    "sortable": false,
+                    "width": 200,
+                    "align": "center",
+                    "dataIndex": "fenddate",
+                    "header": "休假结束时间"
+                },{
+					"sortable": false,
+					"width": 200,
+					"align": "center",
+					"dataIndex": "createTaskDate",
+					"header": "创建时间"
+				}, {
+					"sortable": false,
+					"width": 200,
+					"align": "center",
+					"dataIndex": "endDate",
+					"header": "过期时间"
+				}],
+				"url": "../runtime/vacation/task?processDefinitionId="+$("processDefinitionId").val()+"&userId="+$("userId").val()+"&type=0",
+				"id": "grid",
+				"fit": true,
+				"renderTo": "ct_grid_grid",
+				"useRowNumberColumn": true,
+				"autoQuery": true,
+				"useOperationColumn": {
+					"baseUrl": "../../",
+					"dataType": "boolean",
+					"useDefault": false,
+					"width": 120,
+					"dataIndex": "checked",
+					"params": [{
+						"id": "processTask",
+						"text": "办理",
+						"ACL": "query",
+						"renderer": "_processTaskRenderer",
+						listeners: {
+							"click": _processTask
+						}
+					}, {
+						"id": "takeAndProcessTask",
+						"text": "获取并办理",
+						"ACL": "query",
+						"renderer": "_takeAndProcessTaskRenderer",
+						listeners: {
+							"click": _processTask
+						}
+					}, {
+						"id": "untakeTask",
+						"text": "放弃任务",
+						"ACL": "query",
+						"renderer": "_untakeTaskRenderer",
+						listeners: {
+							"click": _untakeTask
+						}
+					}]
+				},
+				"border": false
+			});
+			new sofa.Window({
+				"items": {
+					xtype: 'fitpanel',
+					contentEl: 'ct_body_formWindow'
+				},
+				"applyTo": "ct_formWindow",
+				"id": "formWindow",
+				"title": "",
+				"height": 500,
+				"visible": false,
+				"width": 880
+			});
+			formWindow = Ext.getCmp("formWindow");
+
+		});
+	</script>
+	<script type="text/javascript">
+		// 查询待办任务
+		function searchSubmit(json, form) {
+			var condition = new Object();
+			condition._jsonData = Ext.encode(json);
+			grid.setUrl('runtime/vacation/task?userId=shengpengliu&type=1&procInstId=' + json.procInstId
+				+ '&procDefName=' +json.procDefName
+				+ '&taskName=' + json.taskName
+				+ '&fapplyuser=' + json.fapplyuser
+				+ '&fapplytype=' + json.fapplytype);
+			grid.setRequestParams(Ext.encode(condition));
+			grid.reload();
+			return false;
+		}
+
+		function _processTask(data, obj) {
+			var formUrl = obj.json.formUrl + "&executorFlag=" + obj.json.executorFlag;
+
+			formWindow.setTitle(data.taskName + " - 办理任务");
+			Ext.getDom("iframe_processForm").src = formUrl;
+			formWindow.show();
+		}
+
+		function _processTaskRenderer(row) {
+			if (row.json.executorFlag == "1") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		function _takeAndProcessTaskRenderer(row) {
+			if (row.json.executorFlag == "0") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		function _untakeTask(data) {
+			Ext.Ajax.request({
+				method: 'get',
+				url: '../../colEngine/untakeTask.ctrl?taskId=' + data.taskId,
+				success: function (data) {
+					sofa.alert(data.responseText);
+					grid.reload();
+				},
+				failure: function (m, s, e) {
+					sofa.alert(m.responseText);
+				}
+			});
+		}
+
+		function _untakeTaskRenderer(row) {
+			if (row.json.executorFlag == "1") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		/* Ext.onReady(function () {
+			_init();
+		});
+
+		function _init() {
+			formWindow.on("hide", function () {
+				document.getElementById("iframe_processForm").src = "";
+				grid.reload();
+			});
+		}  */
+	</script>
+</head>
+
+<body>
+	<!-- 权限 验证-->
+	<!-- 工具栏 -->
+	<div id="ct_sf_2"></div>
+	<form id="form_search" class="" method="get">
+		<table class="sofa-search-table" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="20">
+					<img title="快速查询" class="sofa-search-icon" border="0" src="./taskFiles/themes/images/s.gif" />
+				</td>
+				<td style="padding-top:1px;">
+					<table border="0" width="1024">
+						<tr>
+							<td>
+								<input type="hidden" th:value="${processDefinitionId}" id="processDefinitionId"/>
+							    <input type="hidden" th:value="${userId}" id="userId"/>
+								<div id="ct_form_field_procInstId"></div>
+							</td>
+							<td>
+								<div id="ct_form_field_procDefName"></div>
+							</td>
+							<td>
+								<div id="ct_form_field_taskName"></div>
+							</td>
+							<td>
+								<div id="ct_form_field_frontOperator"></div>
+							</td>
+							<td>
+								<div id="ct_form_field_fapplyuser"></div>
+							</td>
+							<td>
+								<div id="ct_form_field_fapplytype"></div>
+							</td>
+							<td>
+								<div id="ct_btn_sf_3"></div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<!-- 权限插件 -->
+	<!---->
+	<div id="ct_grid_grid"></div>
+	<div id="ct_formWindow">
+		<div id="ct_body_formWindow" class="x-hidden">
+			<iframe id="iframe_processForm" src="" width="100%" height="450" frameborder="0"
+				style="overflow-x:hidden;overflow-y:auto"></iframe>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="generator/config.properties"/>
+    <context id="Oracle" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <plugin type="${mapper.plugin}">
+          <property name="mappers" value="${mapper.Mapper}"/>
+        </plugin>
+        <jdbcConnection driverClass="${jdbc.driverClass}" connectionURL="${jdbc.url}" userId="${jdbc.user}" password="${jdbc.password}"/>
+        <javaModelGenerator targetPackage="${targetModelPackage}" targetProject="${targetJavaProject}"/>
+        <sqlMapGenerator targetPackage="${targetXMLPackage}"  targetProject="${targetResourcesProject}"/>
+        <javaClientGenerator targetPackage="${targetMapperPackage}" targetProject="${targetJavaProject}" type="XMLMAPPER" />
+        <table tableName="T_USER" >
+          <generatedKey column="id" sqlStatement="Oracle" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

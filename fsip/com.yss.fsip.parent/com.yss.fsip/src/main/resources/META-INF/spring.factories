@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.yss.fsip.JNDIDataSourceConfiguration,\
+com.yss.fsip.RepositoryAutoConfiguration

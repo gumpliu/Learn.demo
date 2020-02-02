@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yss.fsip.demo.auth.mapper.UserMapper">
+<!--   
+  <resultMap id="BaseResultMap" type="com.yss.fsip.demo.auth.entity.TUser">
+    <id column="FID" jdbcType="DECIMAL" property="fid" />
+    <result column="FCODE" jdbcType="VARCHAR" property="fcode" />
+    <result column="FNAME" jdbcType="VARCHAR" property="fname" />
+    <result column="FGENDER" jdbcType="DECIMAL" property="fgender" />
+    <result column="FTYPE" jdbcType="DECIMAL" property="ftype" />
+    <result column="FLOGIN_CODE" jdbcType="VARCHAR" property="floginCode" />
+    <result column="FPWD" jdbcType="VARCHAR" property="fpwd" />
+    <result column="FACCOUNT_TYPE" jdbcType="DECIMAL" property="faccountType" />
+    <result column="FORIGIN_TYPE" jdbcType="DECIMAL" property="foriginType" />
+    <result column="FLOGIN_ACCOUNT_TYPE" jdbcType="DECIMAL" property="floginAccountType" />
+    <result column="FBIRTHDAY" jdbcType="DATE" property="fbirthday" />
+    <result column="FEMAIL" jdbcType="VARCHAR" property="femail" />
+    <result column="FJOB" jdbcType="VARCHAR" property="fjob" />
+    <result column="FPOSTAL_ADDRESS" jdbcType="VARCHAR" property="fpostalAddress" />
+    <result column="FZIP_CODE" jdbcType="VARCHAR" property="fzipCode" />
+    <result column="FTELEPHONE" jdbcType="VARCHAR" property="ftelephone" />
+    <result column="FMOBILE" jdbcType="VARCHAR" property="fmobile" />
+    <result column="FREMARK" jdbcType="VARCHAR" property="fremark" />
+    <result column="FLOCK_STATE" jdbcType="DECIMAL" property="flockState" />
+    <result column="FORIG_STATE" jdbcType="DECIMAL" property="forigState" />
+    <result column="FSTART_DATE" jdbcType="DATE" property="fstartDate" />
+    <result column="FEND_DATE" jdbcType="DATE" property="fendDate" />
+    <result column="FCREATOR_ID" jdbcType="DECIMAL" property="fcreatorId" />
+    <result column="FCREATE_TIME" jdbcType="TIMESTAMP" property="fcreateTime" />
+    <result column="FLAST_EDITOR_ID" jdbcType="DECIMAL" property="flastEditorId" />
+    <result column="FLAST_EDIT_TIME" jdbcType="TIMESTAMP" property="flastEditTime" />
+    <result column="FDELETOR_ID" jdbcType="DECIMAL" property="fdeletorId" />
+    <result column="FDELETE_TIME" jdbcType="TIMESTAMP" property="fdeleteTime" />
+    <result column="FDELETE_STATE" jdbcType="DECIMAL" property="fdeleteState" />
+    <result column="FCHECK_STATE" jdbcType="DECIMAL" property="fcheckState" />
+    <result column="FCHECKER_ID" jdbcType="DECIMAL" property="fcheckerId" />
+    <result column="FCHECK_TIME" jdbcType="TIMESTAMP" property="fcheckTime" />
+    <result column="FPWD_EFF_DATE" jdbcType="TIMESTAMP" property="fpwdEffDate" />
+    <result column="FACCOUNT_STATE" jdbcType="DECIMAL" property="faccountState" />
+    <result column="FNAMEPY" jdbcType="VARCHAR" property="fnamepy" />
+    <result column="FSPECIAL_USER_STATE" jdbcType="DECIMAL" property="fspecialUserState" />
+  </resultMap>
+  -->
+  <!-- 虽然fid是DECIMAL类型，但也可以用string类型的条件查询 -->
+  <select id="getUserById" parameterType="string" resultType="map">
+	  select fid as "id",
+	  	flogin_code as "loginCode",
+	  	fname as "name"
+	  from t_user
+	  where fid = #{fid}
+  </select>
+</mapper>

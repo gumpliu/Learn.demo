@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yss.fsip.demo.auth.mapper.UserRoleMapper">
+
+  <!-- resultType 为map而不是list，当返回数据为list时，resultType指定的是list里的元素类型 -->
+  <select id="getUserRoleById" parameterType="string" resultType="map">
+	select
+		distinct r.fid as "id",
+		r.frole_name as "name"
+	from
+		t_user u,
+		t_acl_role r,
+		t_acl_userrole ur
+	where
+		u.fid = ur.fuser_id
+		and r.fid = ur.frole_id
+		and r.fauthtype = 0
+		and r.fcheck_state=1 and r.fdelete_state=0
+		and u.fcheck_state=1 and u.fdelete_state=0
+		and ur.fcheck_state=1 and ur.fdelete_state=0
+		and u.fid = #{fid}
+  </select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yss.fsip.demo.auth.mapper.UserDataMapper">
+
+  <select id="getUserDataById" parameterType="string" resultType="map">
+	select
+		fauth_code as "code",
+		fpropertygroup_code as "group",
+		fdata_value as "value"
+	from
+		t_acl_roledata
+	where
+		fcheck_state = 1
+		and fdelete_state = 0
+		and frel_id in (
+			select r.fid
+		from
+			t_user u,
+			t_acl_role r,
+			t_acl_userrole ur
+		where
+			u.fid = ur.fuser_id
+			and r.fid = ur.fdatarole_id
+			and r.fauthtype = 1
+			and r.fcheck_state = 1
+			and r.fdelete_state = 0
+			and u.fcheck_state = 1
+			and u.fdelete_state = 0
+			and ur.fcheck_state = 1
+			and ur.fdelete_state = 0
+			and u.fid = #{fid})
+  </select>
+</mapper>

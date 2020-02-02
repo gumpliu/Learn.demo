@@ -1,0 +1,46 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<head>
+<title>start.form</title>
+<script th:src="@{/jquery/jquery-1.8.3.min.js}"></script>
+<script type="text/javascript">
+
+function formSubmit(  )
+
+{   
+   if(confirm("确认提交任务?")) {
+	   var url = "";
+	   var processDefinitionId = $("#processDefinitionId").val();
+	   var taskId  = $("#taskId").val();
+	   if(processDefinitionId!=null && processDefinitionId!=undefined && processDefinitionId!=""){
+		   url = "?processDefinitionId="+processDefinitionId;
+	   }else{
+		   url = "?taskId="+taskId;
+	   }
+    	 $.ajax({
+    		    type:"GET",
+    		    url: $("#myForm").attr('action')+url,
+    		    data:$('#myForm').serialize(),
+    		    contentType: "application/json; charset=utf-8",
+    		    dataType: "html",
+    		    success: function (avg) {
+    		    	alert("办理完成! 流水号："+avg);
+    		    }
+    	 }); 
+    } 
+   
+}
+
+</script>
+<body style="text-align:center;">
+  <style> .divTestStyle{width:600px;height:600px;border:3px solid #000} </style>
+  <div>
+    <div class="divTestStyle">
+      <input type="hidden" id="processDefinitionId" name="processDefinitionId" th:value="${processDefinitionId}"/>
+      <input type="hidden" id="taskId" name="taskId" th:value="taskId"/>
+      <div id="form_div"><span th:utext="${form_Data}"></span></div>
+    </div>
+  </div>
+</body>
+
+</html>

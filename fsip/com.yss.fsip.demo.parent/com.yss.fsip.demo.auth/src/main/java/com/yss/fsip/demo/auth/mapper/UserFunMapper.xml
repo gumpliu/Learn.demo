@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yss.fsip.demo.auth.mapper.UserFunMapper">
+
+  <select id="getUserFunById" parameterType="string" resultType="map">
+	select
+		fcode as "funCode",
+		fname as "funName",
+		to_char(wm_concat(ocode)) as "operCodes",
+		to_char(wm_concat(oname)) as "operNames"
+	from
+		(
+		select
+			distinct rf.ffunc_code as fcode,
+			f.fname as fname,
+			rf.foperation_code as ocode,
+			o.fname as oname
+		from
+			t_acl_rolefunction rf,
+			t_deploy_function f,
+			t_deploy_operation o
+		where
+			rf.frel_id in(
+			select
+				r.fid
+			from
+				t_user u,
+				t_acl_role r,
+				t_acl_userrole ur
+			where
+				u.fid = ur.fuser_id
+				and r.fid = ur.frole_id
+				and r.fauthtype = 0
+				and r.fcheck_state = 1
+				and r.fdelete_state = 0
+				and u.fcheck_state = 1
+				and u.fdelete_state = 0
+				and ur.fcheck_state = 1
+				and ur.fdelete_state = 0
+				and u.fid = #{fid} )
+			and rf.fcheck_state = 1
+			and rf.fdelete_state = 0
+			and f.fcode = rf.ffunc_code
+			and o.functionid = f.fid
+			and o.fcode = rf.foperation_code )
+	group by
+		fcode,
+		fname
+  </select>
+</mapper>
