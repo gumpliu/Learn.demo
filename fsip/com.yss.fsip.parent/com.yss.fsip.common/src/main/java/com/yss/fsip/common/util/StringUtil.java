@@ -1049,6 +1049,33 @@ public final class StringUtil {
 		return sbu.toString();
 	}
 
+	/**
+	 * 判断是否包含英文字母
+	 *
+	 * @param str
+	 * @return
+	 */
+	public static boolean judgeContainsStr(String str) {
+		String regex=".*[a-zA-Z]+.*";
+		Matcher m= Pattern.compile(regex).matcher(str);
+		return m.matches();
+	}
+
+	/**
+	* 模糊查询特殊字符串处理：<br/>
+	*  / 改成 // <br/>
+	*  _ 改成 /_ <br/>
+	*  % 改成 /% <br/>
+	* @Author: jingminy
+	* @Date: 2020/2/28 9:54
+	*/
+	public static String processLikeQueryEscapeChar(String str) {
+		if(isEmpty(str)) {
+			return str;
+		}
+		return str.replaceAll("/", "//").replaceAll("_", "/_").replaceAll("%", "/%");
+	}
+
 	public static void main(String[] args) {
 		System.out.println(rmbToBigString(0.09));
 	}

@@ -1,91 +1,165 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-  <process id="cancelAccountManage" name="è´¦æˆ·é”€æˆ·" isExecutable="true">
-    <startEvent id="startevent1" name="Start"></startEvent>
-    <endEvent id="endevent1" name="End"></endEvent>
-    <userTask id="cancelAcctStart" name="è´¦æˆ·é”€æˆ·ç»åŠž" activiti:formKey="window:/Portal/lifeCycleManagement/BusinessManager/AccountManager/AccountPinHouseholds"></userTask>
-    <userTask id="cancelAcctAudit" name="è´¦æˆ·é”€æˆ·å®¡æ‰¹" activiti:candidateGroups="acs-cgblifecycle@account-cancel-review" activiti:formKey="window:/Portal/lifeCycleManagement/MyTask/AccountPinHousehodsApprove?input=disable">
-      <extensionElements>
-        <activiti:taskListener event="create" class="com.yss.fsip.lifecycle.web.event.UserCommonListener"></activiti:taskListener>
-      </extensionElements>
+<?xml version="1.0" encoding="GBK" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:yaoqiang="http://bpmn.sourceforge.net" exporter="Yaoqiang BPMN Editor" exporterVersion="5.3" expressionLanguage="http://www.w3.org/1999/XPath" id="_1575006117862" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://bpmn.sourceforge.net/schemas/BPMN20.xsd">
+  <process id="cancelAccountManage" isClosed="false" isExecutable="true" name="ÕË»§Ïú»§" processType="None">
+    <extensionElements>
+      <yaoqiang:description/>
+      <yaoqiang:pageFormat height="841.8897637795276" imageableHeight="831.8897637795276" imageableWidth="588.1102362204724" imageableX="5.0" imageableY="5.0" orientation="0" width="598.1102362204724"/>
+      <yaoqiang:page background="#FFFFFF" horizontalCount="2" verticalCount="1"/>
+    </extensionElements>
+    <startEvent id="startevent1" isInterrupting="true" name="Start" parallelMultiple="false">
+      <outgoing>flow1</outgoing>
+      <outputSet/>
+    </startEvent>
+    <endEvent id="endevent1" name="End">
+      <incoming>flow6</incoming>
+      <incoming>flow8</incoming>
+      <inputSet/>
+    </endEvent>
+    <userTask activiti:formKey="window:/Portal/lifeCycleManagement/BusinessManager/AccountManager/AccountPinHouseholds" completionQuantity="1" id="cancelAcctStart" implementation="##unspecified" isForCompensation="false" name="ÕË»§Ïú»§¾­°ì" startQuantity="1">
+      <incoming>flow1</incoming>
+      <incoming>flow5</incoming>
+      <outgoing>flow2</outgoing>
     </userTask>
-    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="cancelAcctStart"></sequenceFlow>
-    <sequenceFlow id="flow2" sourceRef="cancelAcctStart" targetRef="cancelAcctAudit"></sequenceFlow>
-    <sequenceFlow id="flow3" sourceRef="cancelAcctAudit" targetRef="exclusivegateway1"></sequenceFlow>
+    <userTask activiti:candidateGroups="acs-cgblifecycle@account-cancel-review" activiti:formKey="window:/Portal/lifeCycleManagement/MyTask/AccountPinHousehodsApprove?input=disable" completionQuantity="1" id="cancelAcctAudit" implementation="##unspecified" isForCompensation="false" name="ÕË»§Ïú»§ÉóÅú" startQuantity="1">
+      <extensionElements>
+        <activiti:taskListener class="com.yss.fsip.lifecycle.web.event.UserCommonListener" event="create"/>
+      </extensionElements>
+      <incoming>flow2</incoming>
+      <outgoing>flow3</outgoing>
+    </userTask>
+    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway1" name="Exclusive Gateway">
+      <incoming>flow3</incoming>
+      <outgoing>flow4</outgoing>
+      <outgoing>flow5</outgoing>
+      <outgoing>flow6</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="cancelAcctStart"/>
+    <sequenceFlow id="flow2" sourceRef="cancelAcctStart" targetRef="cancelAcctAudit"/>
+    <sequenceFlow id="flow3" sourceRef="cancelAcctAudit" targetRef="exclusivegateway1"/>
     <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="stampCancelAcct">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${calCheck=="pass" && type=="ZHLX01"}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="exclusivegateway1" targetRef="cancelAcctStart">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${calCheck!="pass"}]]></conditionExpression>
     </sequenceFlow>
-    <serviceTask id="stampCancelAcct" name="è°ƒç”¨ç”µå­å°é‰´ç³»ç»Ÿå®Œæˆç”¨å°" activiti:class="com.yss.fsip.lifecycle.web.delegate.account.AccountDelegateServiceImpl"></serviceTask>
-    <serviceTask id="emailCancleAcct" name="å°†é”€æˆ·é€šçŸ¥ä¹¦ä»¥é‚®ä»¶å‘é€å¼€æˆ·è¡Œ" activiti:class="com.yss.fsip.lifecycle.web.delegate.account.AccountDelegateServiceImpl"></serviceTask>
+    <serviceTask activiti:class="com.yss.fsip.lifecycle.web.delegate.account.AccountDelegateServiceImpl" completionQuantity="1" id="stampCancelAcct" implementation="##WebService" isForCompensation="false" name="µ÷ÓÃµç×ÓÓ¡¼øÏµÍ³Íê³ÉÓÃÓ¡" startQuantity="1">
+      <incoming>flow4</incoming>
+      <outgoing>flow7</outgoing>
+    </serviceTask>
+    <serviceTask activiti:class="com.yss.fsip.lifecycle.web.delegate.account.AccountDelegateServiceImpl" completionQuantity="1" id="emailCancleAcct" implementation="##WebService" isForCompensation="false" name="½«Ïú»§Í¨ÖªÊéÒÔÓÊ¼þ·¢ËÍ¿ª»§ÐÐ" startQuantity="1">
+      <incoming>flow7</incoming>
+      <outgoing>flow8</outgoing>
+    </serviceTask>
     <sequenceFlow id="flow6" sourceRef="exclusivegateway1" targetRef="endevent1">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${calCheck=="pass" && type!="ZHLX01"}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow7" sourceRef="stampCancelAcct" targetRef="emailCancleAcct"></sequenceFlow>
-    <sequenceFlow id="flow8" sourceRef="emailCancleAcct" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="stampCancelAcct" targetRef="emailCancleAcct"/>
+    <sequenceFlow id="flow8" sourceRef="emailCancleAcct" targetRef="endevent1"/>
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_cancelAccountManage">
-    <bpmndi:BPMNPlane bpmnElement="cancelAccountManage" id="BPMNPlane_cancelAccountManage">
-      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="40.0" y="230.0"></omgdc:Bounds>
+  <bpmndi:BPMNDiagram id="Yaoqiang_Diagram-cancelAccountManage" name="Untitled Diagram" resolution="96.0">
+    <bpmndi:BPMNPlane bpmnElement="cancelAccountManage">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="Yaoqiang-startevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="40.0" y="230.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="29.0" x="41.5" y="269.49"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="1260.0" y="230.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="Yaoqiang-endevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="1260.0" y="230.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="24.0" x="1264.0" y="269.49"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="cancelAcctStart" id="BPMNShape_cancelAcctStart">
-        <omgdc:Bounds height="62.0" width="107.0" x="140.0" y="217.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="cancelAcctStart" id="Yaoqiang-cancelAcctStart">
+        <omgdc:Bounds height="62.0" width="107.0" x="140.0" y="217.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="72.0" x="157.5" y="239.49"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="cancelAcctAudit" id="BPMNShape_cancelAcctAudit">
-        <omgdc:Bounds height="55.0" width="105.0" x="350.0" y="220.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="cancelAcctAudit" id="Yaoqiang-cancelAcctAudit">
+        <omgdc:Bounds height="55.0" width="105.0" x="350.0" y="220.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="72.0" x="366.5" y="238.99"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
-        <omgdc:Bounds height="40.0" width="40.0" x="570.0" y="227.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="Yaoqiang-exclusivegateway1" isMarkerVisible="true">
+        <omgdc:Bounds height="42.0" width="42.0" x="570.0" y="227.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="100.0" x="541.0" y="271.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="stampCancelAcct" id="BPMNShape_stampCancelAcct">
-        <omgdc:Bounds height="55.0" width="125.0" x="710.0" y="220.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="stampCancelAcct" id="Yaoqiang-stampCancelAcct">
+        <omgdc:Bounds height="55.0" width="125.0" x="710.0" y="220.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="37.02" width="105.0" x="720.0" y="230.99"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="emailCancleAcct" id="BPMNShape_emailCancleAcct">
-        <omgdc:Bounds height="55.0" width="126.0" x="980.0" y="220.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="emailCancleAcct" id="Yaoqiang-emailCancleAcct">
+        <omgdc:Bounds height="55.0" width="126.0" x="980.0" y="220.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="37.02" width="105.0" x="990.5" y="230.99"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
-        <omgdi:waypoint x="75.0" y="247.0"></omgdi:waypoint>
-        <omgdi:waypoint x="140.0" y="248.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="Yaoqiang-flow8">
+        <omgdi:waypoint x="1106.0" y="247.5"/>
+        <omgdi:waypoint x="1260.0" y="246.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="6.0" x="1180.0" y="236.24"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="247.0" y="248.0"></omgdi:waypoint>
-        <omgdi:waypoint x="350.0" y="247.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="Yaoqiang-flow7">
+        <omgdi:waypoint x="835.0" y="247.5"/>
+        <omgdi:waypoint x="980.0" y="247.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="6.0" x="904.5" y="236.99"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
-        <omgdi:waypoint x="455.0" y="247.0"></omgdi:waypoint>
-        <omgdi:waypoint x="570.0" y="247.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="Yaoqiang-flow6">
+        <omgdi:waypoint x="590.0" y="228.0"/>
+        <omgdi:waypoint x="590.0" y="141.0"/>
+        <omgdi:waypoint x="930.0" y="141.0"/>
+        <omgdi:waypoint x="1277.0" y="141.0"/>
+        <omgdi:waypoint x="1276.0" y="230.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="204.0" x="832.0" y="130.49"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
-        <omgdi:waypoint x="610.0" y="247.0"></omgdi:waypoint>
-        <omgdi:waypoint x="710.0" y="247.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="Yaoqiang-flow5">
+        <omgdi:waypoint x="590.0" y="268.0"/>
+        <omgdi:waypoint x="590.0" y="323.0"/>
+        <omgdi:waypoint x="193.0" y="323.0"/>
+        <omgdi:waypoint x="193.5" y="279.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="104.0" x="345.25" y="312.49"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
-        <omgdi:waypoint x="590.0" y="267.0"></omgdi:waypoint>
-        <omgdi:waypoint x="590.0" y="323.0"></omgdi:waypoint>
-        <omgdi:waypoint x="193.0" y="323.0"></omgdi:waypoint>
-        <omgdi:waypoint x="193.0" y="279.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="Yaoqiang-flow4">
+        <omgdi:waypoint x="612.0" y="248.0"/>
+        <omgdi:waypoint x="710.0" y="247.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="208.0" x="557.0" y="237.24"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
-        <omgdi:waypoint x="590.0" y="227.0"></omgdi:waypoint>
-        <omgdi:waypoint x="590.0" y="141.0"></omgdi:waypoint>
-        <omgdi:waypoint x="930.0" y="141.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1277.0" y="141.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1277.0" y="230.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="Yaoqiang-flow3">
+        <omgdi:waypoint x="455.0" y="247.5"/>
+        <omgdi:waypoint x="570.0" y="248.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="6.0" x="509.5" y="237.24"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
-        <omgdi:waypoint x="835.0" y="247.0"></omgdi:waypoint>
-        <omgdi:waypoint x="980.0" y="247.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="Yaoqiang-flow2">
+        <omgdi:waypoint x="247.0" y="248.0"/>
+        <omgdi:waypoint x="350.0" y="247.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="6.0" x="295.5" y="237.24"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
-        <omgdi:waypoint x="1106.0" y="247.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1260.0" y="247.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="Yaoqiang-flow1">
+        <omgdi:waypoint x="72.0" y="246.0"/>
+        <omgdi:waypoint x="140.0" y="248.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="21.02" width="6.0" x="103.0" y="236.49"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -14,7 +14,6 @@ import java.util.Map;
  * @Author: gumpLiu
  * @Date: 2019-11-14 11:27
  */
-@Component
 public class BeanUtil implements ApplicationContextAware  {
 	
 	Logger logger = LoggerFactory.getLogger(BeanUtil.class);

@@ -10,11 +10,11 @@ public interface MappingDataBinding {
 
     /***
      * 通过type,value获取需要转换的值
-     *
-     * @param type IdMappingTarget中type值，type值是去掉前缀的
-     * @param value 待转换值，如：id值
-     * @return java.lang.String
+     * @param sourceCode 被转换属性名称
+     * @param targetCode 转出成属性名称
+     * @param value
+     * @return
      */
-    public String getData(String type, String value);
+    public String getData(String sourceCode,String targetCode, String value);
 
 }

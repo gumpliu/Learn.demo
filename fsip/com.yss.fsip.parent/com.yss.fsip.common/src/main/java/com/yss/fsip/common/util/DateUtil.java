@@ -138,6 +138,15 @@ public final class DateUtil {
 	}
 
 	/**
+	 * 获取当前时间
+	 *
+	 * @return
+	 */
+	public static Date getCurrTime() {
+		return new Date();
+	}
+
+	/**
 	 * 
 	 * @param dateStr
 	 * @param amount
@@ -823,16 +832,16 @@ public final class DateUtil {
 	 * @return 当前时间
 	 * @throws ParseException 异常
 	 */
-	public static Date getCurrentTime() throws ParseException {
+	public static Date getCurrentTime() {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String systemTime = sdf.format(new Date()).toString();
+		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_ONE);
+		String systemTime = sdf.format(new Date());
 		Date returnDate = null;
 		try {
 			returnDate = sdf.parse(systemTime);
 		} catch (ParseException e) {
 			logger.error(e.getMessage());
-			throw e;
+			e.printStackTrace();
 		}
 		return returnDate;
 	}

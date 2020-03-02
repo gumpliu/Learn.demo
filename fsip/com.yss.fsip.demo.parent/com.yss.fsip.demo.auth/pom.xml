@@ -1,16 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>com.yss.fsip.demo.parent</artifactId>
-        <groupId>com.lsp.learn.demo</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>com.yss.fsip.demo.auth</artifactId>
-
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.yss.fsip.demo</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.yss.fsip.demo.auth</groupId>
+  <artifactId>com.yss.fsip.demo.auth</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>com.yss.fsip.demo.auth</name>
+  <url>http://maven.apache.org</url>
+  
+  
 	<properties>
 		<java.version>1.8</java.version>
 	    <!--  MyBatis Generator  -->
@@ -28,17 +31,16 @@
   
 
   <dependencies>
-	  <dependency>
-		  <groupId>com.lsp.learn.demo</groupId>
-		  <artifactId>fsip-spring-boot-starter</artifactId>
-		  <version>1.0-SNAPSHOT</version>
-	  </dependency>
-
-	  <dependency>
-		  <groupId>com.lsp.learn.demo</groupId>
-		  <artifactId>com.yss.fsip.common</artifactId>
-		  <version>1.0-SNAPSHOT</version>
-	  </dependency>
+		<dependency>
+			<groupId>com.yss</groupId>
+			<artifactId>fsip-spring-boot-starter</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			  <groupId>com.yss.fsip.common</groupId>
+ 			  <artifactId>com.yss.fsip.common</artifactId>
+  			  <version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-thymeleaf</artifactId>

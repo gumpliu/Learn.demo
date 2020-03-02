@@ -1,9 +1,13 @@
 package com.yss.fsip;
 
-import org.springframework.context.annotation.ComponentScan;
+import com.yss.fsip.util.BeanUtil;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan("com.yss.fsip")
-public class PackageAllScaner {  
+public class PackageAllScaner {
+    @Bean
+    public BeanUtil beanUtil(){
+        return new BeanUtil();
+    }
 } 

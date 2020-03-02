@@ -24,7 +24,7 @@ public class UserMappingDataBinding implements  MappingDataBinding {
     }
 
     @Override
-    public String getData(String type, String value) {
+    public String getData(String sourceCode,String targetCode, String value) {
         return map.get(value);
     }
 }

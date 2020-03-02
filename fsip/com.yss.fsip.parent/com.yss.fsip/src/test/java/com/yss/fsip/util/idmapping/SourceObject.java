@@ -1,6 +1,6 @@
 package com.yss.fsip.util.idmapping;
 
-import com.yss.fsip.IdMappingTarget;
+import com.yss.fsip.annotations.IdMappingTarget;
 
 /**
  * 测试源 数据
@@ -14,7 +14,7 @@ public class SourceObject {
     /**
      * 根据type值user找到UserMappingDataBinding
      */
-    @IdMappingTarget(type = "user", fromCode = "id", mappingDataBinding = UserMappingDataBinding.class)
+    @IdMappingTarget(fromCode = "id", mappingDataBinding = UserMappingDataBinding.class)
     private String name;
     private String age;
 

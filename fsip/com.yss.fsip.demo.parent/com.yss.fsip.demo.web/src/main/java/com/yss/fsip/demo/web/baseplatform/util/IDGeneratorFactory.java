@@ -3,6 +3,7 @@ package com.yss.fsip.demo.web.baseplatform.util;
 import com.yss.fsip.common.util.id.IDGenerator;
 import com.yss.fsip.common.util.id.NUIDGenerator;
 import com.yss.fsip.demo.web.baseplatform.config.FsipConfig;
+import com.yss.fsip.util.BeanUtil;
 
 /**
  * IDGenerator factory

@@ -42,6 +42,11 @@ public class FsipFilter implements Filter {
 	private String excludedPaths = "/static/*,/templates/*,*.html,*.js,*.ico,*.png,*jpeg";
 
 	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+
+	}
+
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
@@ -71,6 +76,11 @@ public class FsipFilter implements Filter {
 			chain.doFilter(request, response);
 
 		}
+	}
+
+	@Override
+	public void destroy() {
+
 	}
 
 	/**
@@ -193,17 +203,5 @@ public class FsipFilter implements Filter {
 			}
 		}
 		return false;
-	}
-	
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-		
 	}
 }
