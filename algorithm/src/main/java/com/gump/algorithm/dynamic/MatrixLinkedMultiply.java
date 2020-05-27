@@ -14,8 +14,9 @@ package com.gump.algorithm.dynamic;
 public class MatrixLinkedMultiply {
 
     public static void main(String[] args) {
-        //矩阵列
+        //矩阵列 6个矩阵{用数组表示的矩阵链 Ai=Pi-1 Pi [i-1/i为数组下标],i>=1}
         int[] p = {30, 35, 15, 5, 10, 20, 25};
+        //矩阵个数
         int n = p.length - 1;
         //存放计算代价
         int[][] m = new int[n][n];
@@ -25,7 +26,10 @@ public class MatrixLinkedMultiply {
         for (int i = 0; i < n; i++) {
             m[i][i] = 0;
         }
-        //链长从2到n遍历
+        //链长从2到n遍历，从第二个矩阵开始
+        // * A1:30X35 A2:35X15 A3:15X5 A4:5X10 A5:10x20 A6:20x25
+        //     {30, 35, 15, 5, 10, 20, 25}
+        //最少两个矩阵，所有n>=L>=2，L=2时表示A1 A2 矩阵
         for (int L = 2; L <= n; L++) {
             //遍历的范围，逐渐缩小范围，从第一个开始。
             for (int i = 0; i < n - L + 1; i++) {
@@ -34,7 +38,7 @@ public class MatrixLinkedMultiply {
                 //初始化m[i,j]的值为无限大。
                 m[i][j] = Integer.MAX_VALUE;
                 for (int k = i; k <= j - 1; k++) {
-                    //递归求解公式,当前乘次数
+                    //递归求解公式,当前乘次数，K表示括号位置
                     int q = m[i][k] + m[k + 1][j] + p[i] * p[k + 1] * p[j + 1];
                     //取最小成次数，并保存到m[i][j]
                     if (q < m[i][j]) {
