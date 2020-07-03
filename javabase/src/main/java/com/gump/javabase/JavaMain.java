@@ -100,26 +100,46 @@ public class JavaMain {
 //	  System.out.println(Integer.toBinaryString(h >>> 16));
 
 
-		  int busyTime = 10;
-		  int idleTime = busyTime;
+//		  int busyTime = 10;
+//		  int idleTime = busyTime;
+//
+//		  while(true){
+//			  long startTime = System.currentTimeMillis();
+//			  //busy loop:
+//			  while((System.currentTimeMillis()-startTime)<=busyTime)
+//				  ;
+//			  try {
+//				  Thread.sleep(idleTime);
+//			  } catch (InterruptedException e) {
+//				  e.printStackTrace();
+//			  }
+//		  }
 
-		  while(true){
-			  long startTime = System.currentTimeMillis();
-			  //busy loop:
-			  while((System.currentTimeMillis()-startTime)<=busyTime)
-				  ;
-			  try {
-				  Thread.sleep(idleTime);
-			  } catch (InterruptedException e) {
-				  e.printStackTrace();
-			  }
-		  }
+	  System.out.println((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16 );
+	  System.out.println(Integer.toBinaryString(Integer.numberOfLeadingZeros(16)));
+
+	  System.out.println(Integer.toBinaryString(1 << 15));
+
+	  System.out.println(Integer.toBinaryString((Integer.numberOfLeadingZeros(16) | 1 << 15)));
+
+	  System.out.println(Integer.toBinaryString((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16));
+
+
+	  System.out.println(Integer.toBinaryString(((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16) >>> 16));
+	  System.out.println(Integer.toBinaryString(((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16) >> 18));
+
+
+	  System.out.println(Integer.toBinaryString((1 << 16)  >> 16));
+	  System.out.println(Integer.toBinaryString((1 << 16)  >>> 16));
+
+
+
 
 
 //	  HashMap<String,String> map = new HashMap<String, String>();
 //
 //	  map.put("lsp", "lsp");
-
+//	  0100 0000 0000 0000
 
 
   }
