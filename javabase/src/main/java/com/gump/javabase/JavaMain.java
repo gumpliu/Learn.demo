@@ -115,22 +115,31 @@ public class JavaMain {
 //			  }
 //		  }
 
-	  System.out.println((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16 );
-	  System.out.println(Integer.toBinaryString(Integer.numberOfLeadingZeros(16)));
+//	  System.out.println((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16 );
+//	  System.out.println(Integer.toBinaryString(Integer.numberOfLeadingZeros(16)));
+//
+//	  System.out.println(Integer.toBinaryString(1 << 15));
+//
+//	  System.out.println(Integer.toBinaryString((Integer.numberOfLeadingZeros(16) | 1 << 15)));
+//
+//	  System.out.println(Integer.toBinaryString((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16));
+//
+//
+//	  System.out.println(Integer.toBinaryString(((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16) >>> 16));
+//	  System.out.println(Integer.toBinaryString(((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16) >> 18));
+//
+//
+//	  System.out.println(Integer.toBinaryString((1 << 16)  >> 16));
+//	  System.out.println(Integer.toBinaryString((1 << 16)  >>> 16));
+	  System.out.println(Integer.toBinaryString((-1 << 29) | 0 ));
 
-	  System.out.println(Integer.toBinaryString(1 << 15));
+	  System.out.println(Integer.toBinaryString(((-1 << 29) | 0)& (~((1<<29)-1))));
+	  System.out.println(Integer.toBinaryString(((1<<29)-1)));
 
-	  System.out.println(Integer.toBinaryString((Integer.numberOfLeadingZeros(16) | 1 << 15)));
-
-	  System.out.println(Integer.toBinaryString((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16));
-
-
-	  System.out.println(Integer.toBinaryString(((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16) >>> 16));
-	  System.out.println(Integer.toBinaryString(((Integer.numberOfLeadingZeros(16) | 1 << 15) << 16) >> 18));
+	  System.out.println(Integer.toBinaryString(~((1<<29)-1)));
 
 
-	  System.out.println(Integer.toBinaryString((1 << 16)  >> 16));
-	  System.out.println(Integer.toBinaryString((1 << 16)  >>> 16));
+	  System.out.println(Integer.toBinaryString((1 << 15)));
 
 
 

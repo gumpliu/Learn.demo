@@ -1,7 +1,7 @@
 package com.yss.fsip.demo.web.baseplatform.config;//package com.yss.fsip.demo.web.config;
 
 import com.yss.fsip.demo.api.cxf.DemoWebService;
-import com.yss.fsip.demo.web.webservice.DemoWebServiceImpl;
+import com.yss.fsip.demo.api.cxf.DemoWebServiceImpl;
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.jaxws.EndpointImpl;
@@ -57,6 +57,13 @@ public class CxfWebServiceConfig {
     public Endpoint endpoint(DemoWebService demoWebService) {
         EndpointImpl endpoint = new EndpointImpl(springBus(), demoWebService);
         endpoint.publish("/demoweb");//发布地址
+
+        //打印报文日志拦截器
+        //endpoint.getInInterceptors().add(new LoggingInInterceptor());
+        //endpoint.getInInterceptors().add(new LoggingOutInterceptor());
+
+        //通过拦截器校验用户名与密码
+//        endpoint.getInInterceptors().add(new AuthInterceptor());
         return endpoint;
     }
 }
