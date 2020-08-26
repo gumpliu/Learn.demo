@@ -1,5 +1,6 @@
 package com.gump.javabase;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -149,6 +150,18 @@ public class JavaMain {
 //
 //	  map.put("lsp", "lsp");
 //	  0100 0000 0000 0000
+
+
+	  double doubl = 0.3;
+
+	  double d1 = 0.1;
+
+	  BigDecimal decimal = new BigDecimal(0.1);
+
+
+	  System.out.println(doubl - d1);
+	  System.out.println(decimal);
+
 
 
   }
