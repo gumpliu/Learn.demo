@@ -18,6 +18,19 @@
              xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
              xmlns:activiti="http://activiti.org/bpmn"
              targetNamespace="processDefinitions">
+    <BPMNDiagram xmlns="http://www.omg.org/spec/BPMN/20100524/DI">
+        <BPMNPlane>
+            <BPMNShape bpmnElement="start">
+                <Bounds xmlns="http://www.omg.org/spec/DD/20100524/DC" height="0.0" width="0.0" x="0.0" y="0.0"/>
+            </BPMNShape>
+            <BPMNShape bpmnElement="service1">
+                <Bounds xmlns="http://www.omg.org/spec/DD/20100524/DC" height="0.0" width="0.0" x="0.0" y="0.0"/>
+            </BPMNShape>
+            <BPMNShape bpmnElement="end">
+                <Bounds xmlns="http://www.omg.org/spec/DD/20100524/DC" height="0.0" width="0.0" x="0.0" y="0.0"/>
+            </BPMNShape>
+        </BPMNPlane>
+    </BPMNDiagram>
 
     <process id="waiter">
 
