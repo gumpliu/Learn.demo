@@ -25,7 +25,7 @@ public class Client {
 		// 客户端连接服务器，需要调用channel.finishConnect();才能实际完成连接。
 		channel.connect(new InetSocketAddress(serverIp, port));
 		// 为该通道注册SelectionKey.OP_CONNECT事件，也就是将channel的fd和感兴趣的事件添加到多路复用器中
-		channel.register(selector, SelectionKey.OP_CONNECT);
+		channel.register(selector, SelectionKey.OP_CONNECT, channel);
 		return this;
 	}
  
@@ -34,8 +34,10 @@ public class Client {
 		// 轮询访问selector
 		while (true) {
 			// 选择注册过的io操作的事件(第一次为SelectionKey.OP_CONNECT)
-			// 看过之前文章的话，就明白这是获取注册到该复用器中的通道的相关事件，获取的过程也就是select()方法遍历获取事件不同的系统、jdk也不同，如果是epoll则是从一个fd就绪队列获取
-			// 而select和poll则是遍历存放channel和事件的集合所以效率低下一些,还有其他的效率问题可以看看之前epoll和select的讲解
+			// 看过之前文章的话，就明白这是获取注册到该复用器中的通道的相关事件，
+			// 获取的过程也就是select()方法遍历获取事件不同的系统、jdk也不同，如果是epoll则是从一个fd就绪队列获取
+			// 而select和poll则是遍历存放channel和事件的集合所以效率低下一些,
+			// 还有其他的效率问题可以看看之前epoll和select的讲解
 			selector.select();
 			//获取注册在该复用器上的channel和channelEvent
 			Iterator<SelectionKey> ite = selector.selectedKeys().iterator();
@@ -66,8 +68,7 @@ public class Client {
 					byte[] data = buffer.array();
 					String message = new String(data);
  
-					 System.out.println("recevie message from server:, size:"
-					 + buffer.position() + " msg: " + message);
+					 System.out.println("recevie message from server:, size:" + buffer.position() + " msg: " + message);
 					ByteBuffer outbuffer = ByteBuffer.wrap(("client.".concat(message)).getBytes());
 					channel.write(outbuffer);
 				}

@@ -132,16 +132,16 @@ public class JavaMain {
 //
 //	  System.out.println(Integer.toBinaryString((1 << 16)  >> 16));
 //	  System.out.println(Integer.toBinaryString((1 << 16)  >>> 16));
-	  System.out.println(Integer.toBinaryString((-1 << 29) | 0 ));
-
-	  System.out.println(Integer.toBinaryString(((-1 << 29) | 0)& (~((1<<29)-1))));
-	  System.out.println(Integer.toBinaryString(((1<<29)-1)));
-
-	  System.out.println(Integer.toBinaryString(~((1<<29)-1)));
-
-
-	  System.out.println(Integer.toBinaryString((1 << 15)));
-
+//	  System.out.println(Integer.toBinaryString((-1 << 29) | 0 ));
+//
+//	  System.out.println(Integer.toBinaryString(((-1 << 29) | 0)& (~((1<<29)-1))));
+//	  System.out.println(Integer.toBinaryString(((1<<29)-1)));
+//
+//	  System.out.println(Integer.toBinaryString(~((1<<29)-1)));
+//
+//
+//	  System.out.println(Integer.toBinaryString((1 << 15)));
+//
 
 
 
@@ -152,16 +152,27 @@ public class JavaMain {
 //	  0100 0000 0000 0000
 
 
-	  double doubl = 0.3;
+//	  double doubl = 0.3;
+//
+//	  double d1 = 0.1;
+//
+//	  BigDecimal decimal = new BigDecimal(0.1);
+//
+//
+//	  System.out.println(doubl - d1);
+//	  System.out.println(decimal); 1 10 100 101 110 111
 
-	  double d1 = 0.1;
+	  int num = 6;
+	  int num2 = 7;
+	  int num3 = 3;
+	  int num4 = 6;
+	  int num5 = 3;
+	  int num6 = 7;
+	  int num7 = 6;
+	  int num8 = 7;
 
-	  BigDecimal decimal = new BigDecimal(0.1);
-
-
-	  System.out.println(doubl - d1);
-	  System.out.println(decimal);
-
+	 int nums =  num^num2^num3^num4^num5^num6^num7^num8;
+	 System.out.println(nums);
 
 
   }

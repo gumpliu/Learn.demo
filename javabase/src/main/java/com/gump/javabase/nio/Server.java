@@ -50,11 +50,12 @@ public class Server {
 					// 向客户端发消息
 					channel.write(ByteBuffer.wrap(new String("send message to client").getBytes()));
 					// 在与客户端连接成功后，为客户端通道注册SelectionKey.OP_READ事件。
-					channel.register(selector, SelectionKey.OP_READ);
+					channel.register(selector, SelectionKey.OP_READ, channel);
 					System.out.println("客户端请求连接事件");
 				} else if (key.isReadable()) {// 有可读数据事件,
 					// 获取客户端传输数据可读取消息通道。
 					SocketChannel channel = (SocketChannel) key.channel();
+					Object object = key.attachment();
 					// 创建读取数据缓冲器
 					ByteBuffer buffer = ByteBuffer.allocate(10);
 					int read = channel.read(buffer);
