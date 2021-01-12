@@ -10,7 +10,7 @@ package com.gump.algorithm.sort;
 public class MergeSort_LSP {
 
     public static void main(String[] args) {
-        int[] data = new int[] { 2, 1, 5, 3, 11, 10, 9, 9, 10 };
+        int[] data = { 2, 1, 5, 3, 11, 10, 9, 9, 10 };
 
         System.out.println("排序前的数组：");
         print(data);
@@ -19,6 +19,19 @@ public class MergeSort_LSP {
         sort(data, 0, data.length - 1);
         System.out.println("排序后的数组：");
         print(data);
+        sort_(data);
+        System.out.println("排序后的数组：");
+        print(data);
+    }
+
+    /**
+     * 非递归 归并排序
+     *
+     * @param arr 排序数组
+     */
+    public static void mergeSort(int[] arr){
+        // { 2, 1, 5, 3, 11, 10, 9, 9, 10 };
+
     }
 
     /**
@@ -31,7 +44,7 @@ public class MergeSort_LSP {
         int len = 1;
 
         while (arr.length > len) {
-            // 完全二叉树一层内的遍历
+            // 完全二叉树一层内的遍历，控制间隔大小
             for (int i = 0; i + len <= arr.length - 1; i += len * 2) {
                 int left = i;
                 int mid = i + len - 1;
