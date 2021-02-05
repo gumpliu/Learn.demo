@@ -43,6 +43,8 @@
         <module>consumer</module>
         <module>provider</module>
         <module>eureka.server</module>
+        <module>sleuth</module>
+        <module>zipkin</module>
     </modules>
 
     <build>
