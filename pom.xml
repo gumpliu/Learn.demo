@@ -13,7 +13,7 @@
         <module>algorithm</module>
         <module>data.structure</module>
         <module>quartz</module>
-        <module>fsip</module>
+        <!--<module>fsip</module>-->
         <module>middleware</module>
 		<module>springcloud</module>
 		<module>spring</module>
@@ -28,9 +28,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
-		<repository.url>http://192.168.101.103:8081/nexus/content/groups/public/</repository.url>
-		<releases.url>http://192.168.101.103:8081/nexus/content/repositories/releases/</releases.url>
-		<snapshot.url>http://192.168.101.103:8081/nexus/content/repositories/snapshots/</snapshot.url>
+		<!--<repository.url>http://192.168.101.103:8081/nexus/content/groups/public/</repository.url>-->
+		<!--<releases.url>http://192.168.101.103:8081/nexus/content/repositories/releases/</releases.url>-->
+		<!--<snapshot.url>http://192.168.101.103:8081/nexus/content/repositories/snapshots/</snapshot.url>-->
 	</properties>
 
 	<distributionManagement>

@@ -3,6 +3,10 @@ package com.gump.algorithm.sort;
 /**
  * @Description: 插入排序
  *               原理：插入已排好的序列中，即与已排序列中元素比较，找到合适位置
+ *
+ *              插入排序是从第二个开始，第二个与第一个比较，如果第二个比第一个数小，
+ *              把第二个插入到第一个前面，即与第一个数交互位置。
+ *
  * @Author gumpLiu
  * @Date 2020-10-13
  * @Version V1.0
@@ -15,7 +19,7 @@ public class InsertSort {
         sort1(num);
 
         for(int value : num){
-            System.out.println(value);
+            System.out.print(value + "\t");
         }
     }
     //交换
