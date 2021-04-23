@@ -26,7 +26,26 @@ public class LinkedList {
 
   }
 
+  /**
+   * 输入一个链表，反转链表后，输出新链表的表头。
+   * @param head
+   * @return
+   */
+  public ListNode ReverseList(ListNode head){
+    ListNode pre = null;
+    ListNode cur = head;
+    ListNode next = null;
 
+    while (cur != null){
+      //下一个节点
+      next = cur.next;
+      //转指针
+      cur.next = pre;
+      pre = cur;
+      cur = next;
+    }
+    return pre;
+  }
 }
 
 
