@@ -5,10 +5,13 @@ package com.gump.algorithm.dynamic;
  */
 public class LCSProblem {
     public static void main(String[] args) {
-        String[] x = {"","D", "A", "B", "C"};
-        String[] y = {"","B", "D", "A", "D", "C", "B","D","C"};
-        int[][] b = getLength(x, y);
-        Display(b, x, x.length - 1, y.length - 1);
+//        String[] x = {"","D", "A", "B", "C"};
+//        String[] y = {"","B", "D", "A", "D", "C", "B","D","C"};
+//        int[][] b = getLength(x, y);
+//        Display(b, x, x.length - 1, y.length - 1);
+        System.getProperties().setProperty("lsp","lsp");
+
+        System.out.println(System.getProperty("lsp"));
     }
 
     public static int[][] getLength(String[] x, String[] y) {
