@@ -14,7 +14,8 @@ import java.util.List;
 public class ArrayFind {
 
   public static void main(String [] args){
-
+    int [] num = {2,3,4};
+    System.out.println(maxLength(num));
   }
 
   /**
@@ -89,6 +90,31 @@ public class ArrayFind {
       }
     }
   }
+
+  /**
+   * 给定一个数组arr，返回arr的最长无的重复子串的长度(无重复指的是所有数字都不相同)。
+   * 输入 [2,3,4,5]，输出 4
+   * @param arr int整型一维数组 the array
+   * @return int整型
+   */
+  public static int maxLength (int[] arr) {
+    int left = 0;
+    int max = 0;
+    for(int i = 1; i < arr.length; i++){
+      //二次比较，看看当前arr[i]是否在left-i中
+      boolean isCom = false;
+      for(int j = left; j < i; j++){
+        if(arr[j] == arr[i]){
+          left = j + 1;
+          isCom = true;
+        }
+      }
+      int cMax = isCom ? i - left : i - left + 1;
+      max = cMax > max? cMax: max;
+    }
+    return max;
+  }
+
 
   public void swap(int i, int j, int[] num){
     int c = num[i];
